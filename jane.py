@@ -1,6 +1,7 @@
 import cmd, os
 from collections import defaultdict
 from code import InteractiveConsole, InteractiveInterpreter
+import plistlib
 
 class EmbeddedConsoleExit(SystemExit):
 	pass
@@ -47,25 +48,24 @@ class jane_shell(cmd.Cmd):
 
 	def do_music(self, s):
 		try:
-			import plistlib
-			#Copied from python playground book to see if it works and figure out how
+			# Copied from python playground book to see if it works and figure out how
 			fileName = s
 			print("Finding duplicate tracks in %s..." %fileName)
-			#Read playlist
+			# Read playlist
 			plist = plistlib.readPlist(fileName)
-			#Get tracks
+			# Get tracks
 			tracks = plist["Tracks"]
-			#Create a track name directory
+			# Create a track name directory
 			trackNames = {}
-			#iterate through the tracks
+			# iterate through the tracks
 			for trackId, track in tracks.items():
 				try:
 					name = track["Name"]
 					duration = track["Total Time"]
-					#look for existing entries
+					# look for existing entries
 					if name in trackNames:
-						#if a name and duration match, increment the count
-						#round the track length to the nearest second
+						# if a name and duration match, increment the count
+						# round the track length to the nearest second
 						if duration//1000 == trackNames[name][0]//1000:
 							count = trackNames[name][1]
 							trackNames[name] = (duration, count+1)
@@ -88,6 +88,9 @@ class jane_shell(cmd.Cmd):
 
 	def help_py(self):
 		print("Run an embedded python interpreter with persistant state.")
+
+	def help_music(self):
+		print("Print out all of the songs in an iTunes playlist.")
 
 jshell = jane_shell()
 jshell.cmdloop()
