@@ -1,5 +1,10 @@
 import cmd, os
 
+"""
+Jane class based on the Cmd module.
+Documentation on how to add things can be found here:
+https://wiki.python.org/moin/CmdModule
+"""
 class jane_shell(cmd.Cmd):
 	def __init__(self):
 		cmd.Cmd.__init__(self)
