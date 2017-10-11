@@ -52,5 +52,8 @@ class jane_shell(cmd.Cmd):
 	def help_exit(self):
 		print("Exit the interpreter.")
 
+	def help_py(self):
+		print("Run an embedded python interpreter with persistant state.")
+
 jshell = jane_shell()
 jshell.cmdloop()
