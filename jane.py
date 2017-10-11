@@ -35,7 +35,7 @@ class jane_shell(cmd.Cmd):
 		for v in self.vars:
 			self.pystate[v] = self.vars[v]
 		interp = InteractiveConsole(locals=self.pystate)
-		
+
 		def quit():
 			raise EmbeddedConsoleExit
 		self.pystate['quit'] = quit
@@ -44,6 +44,40 @@ class jane_shell(cmd.Cmd):
 			interp.interact(banner="Python Interactive Shell within Jane.")
 		except EmbeddedConsoleExit:
 			pass
+
+	def do_music(self, s):
+		try:
+			import plistlib
+			#Copied from python playground book to see if it works and figure out how
+			fileName = s
+			print("Finding duplicate tracks in %s..." %fileName)
+			#Read playlist
+			plist = plistlib.readPlist(fileName)
+			#Get tracks
+			tracks = plist["Tracks"]
+			#Create a track name directory
+			trackNames = {}
+			#iterate through the tracks
+			for trackId, track in tracks.items():
+				try:
+					name = track["Name"]
+					duration = track["Total Time"]
+					#look for existing entries
+					if name in trackNames:
+						#if a name and duration match, increment the count
+						#round the track length to the nearest second
+						if duration//1000 == trackNames[name][0]//1000:
+							count = trackNames[name][1]
+							trackNames[name] = (duration, count+1)
+					else:
+						# add dictionary entry as tuple (duration, count)
+						trackNames[name] = (duration, 1)
+				except:
+					# ignore
+					pass
+			print trackNames
+		except:
+			print("Please enter a music playlist name")
 
 	""" help_ entries """
 	def help_shell(self):
