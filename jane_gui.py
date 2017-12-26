@@ -10,6 +10,7 @@ class Jane_Gui:
 		textbox.insert(tk.END, "Welcome to the Jane GUI!")
 
 root = tk.Tk()
+root.title("Jane")
 jane_gui = Jane_Gui(root)
 
 root.mainloop()
