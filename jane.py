@@ -1,7 +1,9 @@
 import cmd, os
 from collections import defaultdict
 from code import InteractiveConsole, InteractiveInterpreter
-import plistlib
+import commands
+
+import music
 
 class EmbeddedConsoleExit(SystemExit):
 	pass
@@ -47,37 +49,39 @@ class jane_shell(cmd.Cmd):
 			pass
 
 	def do_music(self, s):
-		try:
-			# Copied from python playground book to see if it works and figure out how
-			fileName = s
-			print("Finding duplicate tracks in %s..." %fileName)
-			# Read playlist
-			plist = plistlib.readPlist(fileName)
-			# Get tracks
-			tracks = plist["Tracks"]
-			# Create a track name directory
-			trackNames = {}
-			# iterate through the tracks
-			for trackId, track in tracks.items():
-				try:
-					name = track["Name"]
-					duration = track["Total Time"]
-					# look for existing entries
-					if name in trackNames:
-						# if a name and duration match, increment the count
-						# round the track length to the nearest second
-						if duration//1000 == trackNames[name][0]//1000:
-							count = trackNames[name][1]
-							trackNames[name] = (duration, count+1)
-					else:
-						# add dictionary entry as tuple (duration, count)
-						trackNames[name] = (duration, 1)
-				except:
-					# ignore
-					pass
-			print trackNames
-		except:
-			print("Please enter a music playlist name")
+		print("Sorry, this service is unavailable")
+#		artist=commands.getoutput("osascript -e 'tell application \"iTunes\" to artist of current track as string'")
+#		print(artist)
+#		artist = artist.split("\n")
+#		artist = str(artist[1])
+#		track=commands.getoutput("osascript -e 'tell application \"iTunes\" to name of current track as string'")
+#		track = track.split("\n")
+#		track = str(track[1])
+#		state=commands.getoutput("osascript -e 'tell application \"iTunes\" to player state as string'")
+#		state = state.split("\n")
+#		state = str(state[1])
+#		currentvolume=commands.getoutput("osascript -e 'tell application \"iTunes\" to sound volume as integer'")
+#		currentvolume = currentvolume.split("\n")
+#		currentvolume = str(currentvolume[1])
+#		if s == "play":
+#			if state == "paused":
+#				print("Playing your current track")
+#				commands.getoutput("osascript -e 'tell application \"iTunes\" to play'")
+#				print("Currently playing: '%s' by '%s'" % (track, artist))
+#			elif state == "playing":
+#				print("Already playing")
+#			else:
+#				print("No track selected")
+#		elif s == "pause":
+#			if state == "playing":
+#				commands.getoutput("osascript -e 'tell application \"iTunes\" to pause'")
+#				print("Paused")
+#			elif state == "paused":
+#				print("Already paused")
+#		elif s[:8] == "favorite":
+#			music.fav()
+#		elif s[:3] == "all":
+#			music.print_all()
 
 	""" help_ entries """
 	def help_shell(self):
