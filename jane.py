@@ -3,8 +3,6 @@ from collections import defaultdict
 from code import InteractiveConsole, InteractiveInterpreter
 import commands
 
-import music
-
 class EmbeddedConsoleExit(SystemExit):
 	pass
 
@@ -94,7 +92,7 @@ class jane_shell(cmd.Cmd):
 		print("Run an embedded python interpreter with persistant state.")
 
 	def help_music(self):
-		print("Print out all of the songs in an iTunes playlist.")
+		print("Unavailable, Work in Progress")
 
 jshell = jane_shell()
 jshell.cmdloop()
