@@ -13,4 +13,3 @@ root = tk.Tk()
 jane_gui = Jane_Gui(root)
 
 root.mainloop()
-root.destroy()
