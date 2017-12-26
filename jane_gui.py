@@ -1,6 +1,8 @@
 
 import Tkinter as tk 
 
+import system_stats
+
 class Jane_Gui:
 	def __init__(self, master):
 		frame = tk.Frame(master)
