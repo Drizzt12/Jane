@@ -1,5 +1,5 @@
 
-import Tkinter as tk 
+import tkinter as tk 
 
 import system_stats
 
