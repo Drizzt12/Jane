@@ -1,7 +1,10 @@
 import cmd, os
 from collections import defaultdict
 from code import InteractiveConsole, InteractiveInterpreter
-import commands
+from lifxlan import BLUE, COLD_WHITE, CYAN, GOLD, GREEN, LifxLAN, \
+    ORANGE, PINK, PURPLE, RED, WARM_WHITE, WHITE, YELLOW
+lifxlan = LifxLAN
+#Needs python 2 -> import commands
 
 class EmbeddedConsoleExit(SystemExit):
 	pass
@@ -80,6 +83,32 @@ class jane_shell(cmd.Cmd):
 #			music.fav()
 #		elif s[:3] == "all":
 #			music.print_all()
+
+	def do_lights(self, s):
+
+		colors = {
+		    "red": RED,
+		    "orange": ORANGE,
+		    "yellow": YELLOW,
+		    "green": GREEN,
+		    "cyan": CYAN,
+		    "blue": BLUE,
+		    "purple": PURPLE,
+		    "pink": PINK,
+		    "white": WHITE,
+		    "cold_white": COLD_WHITE,
+		    "warm_white": WARM_WHITE,
+		    "gold": GOLD
+		}
+		print(colors["red"])
+		if len(s) > 0:
+			s = s.lower()
+			s = s.split(" ")
+			if len(s) == 1:
+				s = " ".join(s)
+				if s in colors:
+					color = colors[s]
+					lifxlan.set_color_all_lights(color, rapid=True)
 
 	""" help_ entries """
 	def help_shell(self):
