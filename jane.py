@@ -1,4 +1,5 @@
 import cmd, os
+import sys
 from collections import defaultdict
 from code import InteractiveConsole, InteractiveInterpreter
 from lifxlan import BLUE, COLD_WHITE, CYAN, GOLD, GREEN, LifxLAN, \
@@ -85,7 +86,6 @@ class jane_shell(cmd.Cmd):
 #			music.print_all()
 
 	def do_lights(self, s):
-
 		colors = {
 		    "red": RED,
 		    "orange": ORANGE,
@@ -100,15 +100,37 @@ class jane_shell(cmd.Cmd):
 		    "warm_white": WARM_WHITE,
 		    "gold": GOLD
 		}
-		print(colors["red"])
-		if len(s) > 0:
-			s = s.lower()
-			s = s.split(" ")
-			if len(s) == 1:
-				s = " ".join(s)
-				if s in colors:
-					color = colors[s]
-					lifxlan.set_color_all_lights(color, rapid=True)
+		color = None
+		if len(s) == 2:
+		    if s[1].lower() not in colors:
+		        print(error_message)
+		        sys.exit()
+		    else:
+		        color = colors[s[1].lower()]
+		elif len(s) == 5:
+		    color = []
+		    for (i, value) in enumerate(s[1:]):
+		        try:
+		            value = int(value)
+		        except:
+		            print("Problem with {}.".format(value))
+		            print(error_message)
+		            sys.exit()
+		        if i == 3 and (value < 2500 or value > 9000):
+		            print("{} out of valid range.".format(value))
+		            print(error_message)
+		            sys.exit()
+		        elif value < 0 or value > 65535:
+		            print("{} out of valid range.".format(value))
+		            print(error_message)
+		            sys.exit()
+		        color.append(value)
+		else:
+		    print("Fail")
+		    sys.exit()
+
+		print(color)
+		lifxlan.set_color_all_lights(color, rapid=True)
 
 	""" help_ entries """
 	def help_shell(self):
