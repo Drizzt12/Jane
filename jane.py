@@ -2,9 +2,9 @@ import cmd, os
 import sys
 from collections import defaultdict
 from code import InteractiveConsole, InteractiveInterpreter
-from lifxlan import BLUE, COLD_WHITE, CYAN, GOLD, GREEN, LifxLAN, \
+from lifxlan import BLUE, COLD_WHITE, CYAN, GOLD, GREEN,\
     ORANGE, PINK, PURPLE, RED, WARM_WHITE, WHITE, YELLOW
-lifxlan = LifxLAN
+from lifxlan import LifxLAN
 #Needs python 2 -> import commands
 
 class EmbeddedConsoleExit(SystemExit):
@@ -101,36 +101,15 @@ class jane_shell(cmd.Cmd):
 		    "gold": GOLD
 		}
 		color = None
-		if len(s) == 2:
-		    if s[1].lower() not in colors:
-		        print(error_message)
-		        sys.exit()
-		    else:
-		        color = colors[s[1].lower()]
-		elif len(s) == 5:
-		    color = []
-		    for (i, value) in enumerate(s[1:]):
-		        try:
-		            value = int(value)
-		        except:
-		            print("Problem with {}.".format(value))
-		            print(error_message)
-		            sys.exit()
-		        if i == 3 and (value < 2500 or value > 9000):
-		            print("{} out of valid range.".format(value))
-		            print(error_message)
-		            sys.exit()
-		        elif value < 0 or value > 65535:
-		            print("{} out of valid range.".format(value))
-		            print(error_message)
-		            sys.exit()
-		        color.append(value)
-		else:
-		    print("Fail")
+		if s.lower() not in colors:
+		    print(error_message)
 		    sys.exit()
+		else:
+		    color = colors[s.lower()]
 
 		print(color)
-		lifxlan.set_color_all_lights(color, rapid=True)
+		lx = LifxLAN()
+		lx.set_color_all_lights(color=color, rapid=True)
 
 	""" help_ entries """
 	def help_shell(self):
