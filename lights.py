@@ -39,11 +39,3 @@ def get_color():
         else:
             print(d.label + ":")
             print(d.color)
-def get_power():
-    for d in devices:
-        if d.label == None:
-            print("Please run 'lights data' first, to get light data.")
-            break
-        else:
-            print(d.label + ":")
-            print(d.power)

@@ -96,8 +96,6 @@ class jane_shell(cmd.Cmd):
 					lights.data()
 				elif s == "color":
 					lights.get_color()
-				elif s == "power":
-					lights.get_power()
 				else:
 					lights.change_color(s)
 
