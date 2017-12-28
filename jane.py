@@ -2,10 +2,9 @@ import cmd, os
 import sys
 from collections import defaultdict
 from code import InteractiveConsole, InteractiveInterpreter
-from lifxlan import BLUE, COLD_WHITE, CYAN, GOLD, GREEN,\
-    ORANGE, PINK, PURPLE, RED, WARM_WHITE, WHITE, YELLOW
-from lifxlan import LifxLAN
+import lights
 #Needs python 2 -> import commands
+
 
 class EmbeddedConsoleExit(SystemExit):
 	pass
@@ -86,30 +85,21 @@ class jane_shell(cmd.Cmd):
 #			music.print_all()
 
 	def do_lights(self, s):
-		colors = {
-		    "red": RED,
-		    "orange": ORANGE,
-		    "yellow": YELLOW,
-		    "green": GREEN,
-		    "cyan": CYAN,
-		    "blue": BLUE,
-		    "purple": PURPLE,
-		    "pink": PINK,
-		    "white": WHITE,
-		    "cold_white": COLD_WHITE,
-		    "warm_white": WARM_WHITE,
-		    "gold": GOLD
-		}
-		color = None
-		if s.lower() not in colors:
-		    print(error_message)
-		    sys.exit()
-		else:
-		    color = colors[s.lower()]
+		if len(s) > 0:
+			if len(s.split(" ")) > 1:
+				s_split = s.split(" ")
+				if s_split[0] == "theme":
+					print("Unavailable")
 
-		print(color)
-		lx = LifxLAN()
-		lx.set_color_all_lights(color=color, rapid=True)
+			else:
+				if s == "data":
+					lights.data()
+				elif s == "color":
+					lights.get_color()
+				elif s == "power":
+					lights.get_power()
+				else:
+					lights.change_color(s)
 
 	""" help_ entries """
 	def help_shell(self):
@@ -123,6 +113,9 @@ class jane_shell(cmd.Cmd):
 
 	def help_music(self):
 		print("Unavailable, Work in Progress")
+
+	def help_lights(self):
+		print("Usage: 'lights <color>', 'lights color', or 'lights data'")
 
 jshell = jane_shell()
 jshell.cmdloop()
