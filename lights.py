@@ -20,7 +20,11 @@ def change_color(color):
         "warm_white": WARM_WHITE,
         "gold": GOLD
     }
-    if color not in colors:
+    if color == "off":
+        lx.set_power_all_lights(False, rapid=True)
+    elif color == "on":
+        lx.set_power_all_lights(True, rapid=True)
+    elif color not in colors:
         print("That is not an accepted color")
     else:
         color = colors[color]
@@ -39,3 +43,7 @@ def get_color():
         else:
             print(d.label + ":")
             print(d.color)
+#def change_power(power):
+#    power = int(power)
+#    power = power * 655
+#    lx.set_power_all_lights(power_level=power)

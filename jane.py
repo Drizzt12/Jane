@@ -90,12 +90,17 @@ class jane_shell(cmd.Cmd):
 				s_split = s.split(" ")
 				if s_split[0] == "theme":
 					print("Unavailable")
-
+				elif s_split[0] == "power":
+					print("Unavailable")
 			else:
 				if s == "data":
 					lights.data()
 				elif s == "color":
 					lights.get_color()
+				elif s == "power":
+					print("Unavailable")
+				elif s == "theme":
+					print("Unavailable")
 				else:
 					lights.change_color(s)
 
@@ -113,7 +118,9 @@ class jane_shell(cmd.Cmd):
 		print("Unavailable, Work in Progress")
 
 	def help_lights(self):
-		print("Usage: 'lights <color>', 'lights color', or 'lights data'")
+		print("Usage: 'lights <color>', 'lights color', 'lights <on/off>', or 'lights data'")
+		#'0
+		lights power <power_from_1-100>'
 
 jshell = jane_shell()
 jshell.cmdloop()
